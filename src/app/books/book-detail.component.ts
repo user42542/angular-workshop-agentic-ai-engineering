@@ -28,76 +28,81 @@ import { BookApiClient } from './book-api-client.service';
         </button>
 
         <!-- Loading State -->
-        <div *ngIf="loading" class="flex justify-center items-center py-32">
-          <div class="animate-pulse flex flex-col items-center">
-            <div
-              class="h-16 w-16 rounded-full border-4 border-t-blue-700 border-r-blue-700 border-b-gray-200 border-l-gray-200 animate-spin"
-            ></div>
-            <p class="mt-4 text-gray-600">Loading book details...</p>
+        @if (loading) {
+          <div class="flex justify-center items-center py-32">
+            <div class="animate-pulse flex flex-col items-center">
+              <div
+                class="h-16 w-16 rounded-full border-4 border-t-blue-700 border-r-blue-700 border-b-gray-200 border-l-gray-200 animate-spin"
+              ></div>
+              <p class="mt-4 text-gray-600">Loading book details...</p>
+            </div>
           </div>
-        </div>
+        }
 
         <!-- Error State -->
-        <div
-          *ngIf="error && !loading"
-          class="bg-red-50 border border-red-200 rounded-lg p-8 text-center max-w-2xl mx-auto"
-        >
-          <svg
-            class="h-16 w-16 text-red-400 mx-auto mb-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        @if (error && !loading) {
+          <div
+            class="bg-red-50 border border-red-200 rounded-lg p-8 text-center max-w-2xl mx-auto"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
-          </svg>
-          <h2 class="text-2xl font-bold text-red-800 mb-2">Book Not Found</h2>
-          <p class="text-red-600 mb-6">{{ error }}</p>
-          <button
-            (click)="goBack()"
-            class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition duration-200"
-          >
-            Return to Book List
-          </button>
-        </div>
+            <svg
+              class="h-16 w-16 text-red-400 mx-auto mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <h2 class="text-2xl font-bold text-red-800 mb-2">Book Not Found</h2>
+            <p class="text-red-600 mb-6">{{ error }}</p>
+            <button
+              (click)="goBack()"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition duration-200"
+            >
+              Return to Book List
+            </button>
+          </div>
+        }
 
         <!-- Book Detail Content -->
-        <div *ngIf="book && !loading" class="bg-white rounded-xl shadow-lg overflow-hidden">
+        @if (book && !loading) {
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
           <div class="md:flex">
             <!-- Book Cover Section -->
             <div class="md:w-2/5 lg:w-1/3 bg-gradient-to-br from-gray-100 to-gray-200 p-8 flex items-center justify-center">
               <div class="max-w-sm w-full">
-                <img
-                  *ngIf="book.cover"
-                  [src]="book.cover"
-                  [alt]="book.title"
-                  class="w-full rounded-lg shadow-2xl"
-                />
-                <div
-                  *ngIf="!book.cover"
-                  class="w-full aspect-[3/4] bg-gray-300 rounded-lg shadow-2xl flex items-center justify-center"
-                >
-                  <div class="text-center">
-                    <svg
-                      class="h-24 w-24 text-gray-500 mx-auto mb-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                      />
-                    </svg>
-                    <p class="text-gray-600 font-medium">No cover available</p>
+                @if (book.cover) {
+                  <img
+                    [src]="book.cover"
+                    [alt]="book.title"
+                    class="w-full rounded-lg shadow-2xl"
+                  />
+                } @else {
+                  <div
+                    class="w-full aspect-[3/4] bg-gray-300 rounded-lg shadow-2xl flex items-center justify-center"
+                  >
+                    <div class="text-center">
+                      <svg
+                        class="h-24 w-24 text-gray-500 mx-auto mb-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.5"
+                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                        />
+                      </svg>
+                      <p class="text-gray-600 font-medium">No cover available</p>
+                    </div>
                   </div>
-                </div>
+                }
               </div>
             </div>
 
@@ -106,7 +111,9 @@ import { BookApiClient } from './book-api-client.service';
               <!-- Title and Subtitle -->
               <div class="mb-6 border-b border-gray-200 pb-6">
                 <h1 class="text-4xl font-bold text-gray-900 mb-3 leading-tight">{{ book.title }}</h1>
-                <p *ngIf="book.subtitle" class="text-xl text-gray-600 italic">{{ book.subtitle }}</p>
+                @if (book.subtitle) {
+                  <p class="text-xl text-gray-600 italic">{{ book.subtitle }}</p>
+                }
               </div>
 
               <!-- Primary Details Grid -->
@@ -160,6 +167,7 @@ import { BookApiClient } from './book-api-client.service';
             </div>
           </div>
         </div>
+        }
       </div>
     </div>
   `

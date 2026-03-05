@@ -204,7 +204,7 @@ export class BookDetailComponent implements OnInit {
         console.error('Error fetching book:', error);
         this.error = error.status === 404
           ? 'The book you are looking for could not be found.'
-          : 'An error occurred while loading the book details. Please try again later.';
+          : 'An error occurred while loading the book details. Please try again later. ';
         this.loading = false;
       }
     });
